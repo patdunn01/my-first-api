@@ -1,8 +1,8 @@
 DROP DATABASE IF EXISTS nc_games_test;
-DROP DATABASE IF EXISTS nc_games;
 
 CREATE DATABASE nc_games_test;
-CREATE DATABASE nc_games;
+
+\c nc_games_test
 
 CREATE TABLE categories (
     slug VARCHAR(40),
@@ -16,4 +16,3 @@ VALUES
     ('social deduction', 'Players attempt to uncover each other''s hidden role'),
     ('dexterity', 'Games involving physical skill'),
     ('children''s games', 'Games suitable for children');
-
