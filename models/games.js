@@ -15,3 +15,10 @@ exports.allReviews = () => {
     )
     .then((result) => result.rows);
 };
+
+exports.getReviewByRequest = (review_id) => {
+  return db
+    .query ("SELECT * FROM reviews WHERE review_id = $1;", [review_id]
+    )
+    .then((result) => result.rows[0]);
+};

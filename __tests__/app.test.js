@@ -5,7 +5,6 @@ const { app } = require("../app");
 const db = require("../db/connection");
 require("jest-sorted");
 
-
 afterAll(() => {
   if (db.end) {
     return db.end();
@@ -49,12 +48,11 @@ describe("1. GET request.", () => {
       .expect(200)
       .then(({ body }) => {
         expect(body.review).toBeInstanceOf(Array);
-        expect(body.review).toBeSorted('created_at', {
+        expect(body.review).toBeSorted("created_at", {
           descending: true,
         });
         expect(body.review.length).toBeGreaterThan(0);
         const reviewArr = body.review;
-        console.log(reviewArr);
         reviewArr.forEach((review) => {
           expect(review).toEqual(
             expect.objectContaining({
@@ -68,8 +66,30 @@ describe("1. GET request.", () => {
               designer: expect.any(String),
               comment_count: expect.any(String),
             })
-          )
+          );
         });
+      });
+  });
+});
+
+describe("Sepcific review request /api/reviews/:review_id", () => {
+  test("sends back an object of a specific review request", () => {
+    return request(app)
+      .get("/api/reviews/2")
+      .expect(200)
+      .then(({ body }) => {
+        expect(body.review).toEqual(
+          expect.objectContaining({
+            owner: expect.any(String),
+            title: expect.any(String),
+            review_id: expect.any(Number),
+            category: expect.any(String),
+            review_img_url: expect.any(String),
+            created_at: expect.any(String),
+            votes: expect.any(Number),
+            designer: expect.any(String)
+          })
+        );
       });
   });
 });
