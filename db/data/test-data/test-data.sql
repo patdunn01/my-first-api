@@ -16,3 +16,20 @@ VALUES
     ('social deduction', 'Players attempt to uncover each other''s hidden role'),
     ('dexterity', 'Games involving physical skill'),
     ('children''s games', 'Games suitable for children');
+
+CREATE TABLE comments (
+    body TEXT,
+    votes INT,
+    author VARCHAR(255),
+    review_id INT,
+    created_at TIMESTAMP
+);
+
+INSERT INTO comments 
+    (body,
+    votes,
+    author,
+    review_id,
+    created_at)
+
+--require in from test-data if possible--
