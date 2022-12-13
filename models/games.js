@@ -16,8 +16,7 @@ exports.allReviews = () => {
     .then((result) => result.rows);
 };
 
-exports.getReqReview = (review_id) => {
-  console.log("hello from model")
+exports.getReviewByRequest = (review_id) => {
   return db
     .query ("SELECT * FROM reviews WHERE review_id = $1;", [review_id]
     )

@@ -1,4 +1,4 @@
-const { allCategories, allReviews, getReqReview } = require("../models/games");
+const { allCategories, allReviews, getReviewByRequest } = require("../models/games");
 
 exports.getCategories = (request, response) => {
   allCategories(response).then((category) => {
@@ -14,9 +14,7 @@ exports.getReviews = (request, response) => {
 
 exports.getReviewsById = (request, response) => {
   const { review_id } = request.params;
-  console.log(review_id, "review_id")
-  getReqReview(review_id).then((review) => {
+  getReviewByRequest(review_id).then((review) => {
     response.status(200).send({ review })
-    console.log(review)
   })
 };

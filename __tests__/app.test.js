@@ -78,7 +78,6 @@ describe("Sepcific review request /api/reviews/:review_id", () => {
       .get("/api/reviews/2")
       .expect(200)
       .then(({ body }) => {
-        expect(body.review).toBeInstanceOf(Object);
         expect(body.review).toEqual(
           expect.objectContaining({
             owner: expect.any(String),
