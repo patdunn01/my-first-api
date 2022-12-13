@@ -3,6 +3,8 @@ const testData = require("../db/data/test-data");
 const seed = require("../db/seeds/seed");
 const { app } = require("../app");
 const db = require("../db/connection");
+require("jest-sorted");
+
 
 afterAll(() => {
   if (db.end) {
@@ -47,8 +49,12 @@ describe("1. GET request.", () => {
       .expect(200)
       .then(({ body }) => {
         expect(body.review).toBeInstanceOf(Array);
+        expect(body.review).toBeSorted('created_at', {
+          descending: true,
+        });
         expect(body.review.length).toBeGreaterThan(0);
         const reviewArr = body.review;
+        console.log(reviewArr);
         reviewArr.forEach((review) => {
           expect(review).toEqual(
             expect.objectContaining({
@@ -62,7 +68,7 @@ describe("1. GET request.", () => {
               designer: expect.any(String),
               comment_count: expect.any(String),
             })
-          );
+          )
         });
       });
   });
