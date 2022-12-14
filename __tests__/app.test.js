@@ -87,9 +87,32 @@ describe("Sepcific review request /api/reviews/:review_id", () => {
             review_img_url: expect.any(String),
             created_at: expect.any(String),
             votes: expect.any(Number),
-            designer: expect.any(String)
+            designer: expect.any(String),
           })
         );
+      });
+  });
+});
+
+describe("Sepcific comments request by review ID /api/reviews/:review_id/comments", () => {
+  test("sends back an object of specific comments when requested with a review ID", () => {
+    return request(app)
+      .get("/api/reviews/2/comments")
+      .expect(200)
+      .then(({ body }) => {
+        const commentsArr = body.comments;
+        commentsArr.forEach((comment) => {
+          expect(comment).toEqual(
+            expect.objectContaining({
+              comment_id: expect.any(Number),
+              votes: expect.any(Number),
+              created_at: expect.any(String),
+              author: expect.any(String),
+              body: expect.any(String),
+              review_id: expect.any(Number),
+            })
+          );
+        });
       });
   });
 });

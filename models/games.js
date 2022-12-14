@@ -18,7 +18,12 @@ exports.allReviews = () => {
 
 exports.getReviewByRequest = (review_id) => {
   return db
-    .query ("SELECT * FROM reviews WHERE review_id = $1;", [review_id]
-    )
+    .query("SELECT * FROM reviews WHERE review_id = $1;", [review_id])
     .then((result) => result.rows[0]);
+};
+
+exports.getCommentsByReviewId = (review_id) => {
+  return db
+    .query("SELECT * FROM comments WHERE review_id = $1;", [review_id])
+    .then((result) => result.rows);
 };
