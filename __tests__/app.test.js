@@ -23,7 +23,7 @@ describe("Standard error messages", () => {
   });
 });
 
-describe("1. GET request.", () => {
+describe("1. GET requests.", () => {
   test("sends back an array of games categories", () => {
     return request(app)
       .get("/api/categories")
@@ -113,6 +113,22 @@ describe("Sepcific comments request by review ID /api/reviews/:review_id/comment
             })
           );
         });
+      });
+  });
+  test("returns 200 status with message of no comments when valid review_id is provided but there are no comments", () => {
+    return request(app)
+      .get("/api/reviews/6/comments")
+      .expect(200)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe("No Comments found for this review id");
+      });
+  });
+  test("status 404 when bad request has been made", () => {
+    return request(app)
+      .get("/api/reviews/40/comments")
+      .expect(404)
+      .then(({ body: { msg } }) => {
+        expect(msg).toBe("No such path found. Try again...");
       });
   });
 });

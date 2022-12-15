@@ -25,5 +25,7 @@ exports.getReviewByRequest = (review_id) => {
 exports.getCommentsByReviewId = (review_id) => {
   return db
     .query("SELECT * FROM comments WHERE review_id = $1;", [review_id])
-    .then((result) => result.rows);
+    .then((result) => {
+      return result.rows;
+    });
 };
