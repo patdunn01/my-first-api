@@ -20,4 +20,4 @@ const db = new Pool();
 
 module.exports = new Pool(config);
 
-module.exports = db;
+// module.exports = db;
