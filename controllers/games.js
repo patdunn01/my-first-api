@@ -24,32 +24,16 @@ exports.getReviewsById = (request, response) => {
   });
 };
 
-exports.getCommentsById = (request, response) => {
+exports.getCommentsById = (request, response, next) => {
   const review_id = request.params.review_id;
-  getCommentsByReviewId(review_id).then((comments) => {
-    const validReviewIDs = [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-    ];
-    if (!validReviewIDs.includes(review_id)) {
+  Promise.all([
+    getReviewByRequest(review_id),
+    getCommentsByReviewId(review_id),
+  ]).then((comments) => {
+    if (comments[0]) {
+      response.status(200).send({ comments: comments[1] });
+    } else {
       response.status(404).send({ msg: "No such path found. Try again..." });
-    } else if (validReviewIDs.includes(review_id) && comments.length === 0) {
-      response
-        .status(200)
-        .send({ msg: "No Comments found for this review id" });
-    } else if (validReviewIDs.includes(review_id) && comments.length !== 0) {
-      response.status(200).send({ comments });
     }
   });
 };
